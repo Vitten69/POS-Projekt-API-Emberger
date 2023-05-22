@@ -255,6 +255,7 @@ management.endpoints.web.exposure.include=*
 
 > http code | response|
 > -|-
+> `200`        | `Success`
 > `400`        | `{"code":"400","message":"Bad Request"}` 
 > `404`        | `Not Found`
 </details>
