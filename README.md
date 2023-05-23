@@ -168,7 +168,7 @@ management.endpoints.web.exposure.include=*
 ## Beschreibung der API
 
 <details>
- <summary><code>POST</code> <code>/articles</code></summary>
+<summary><code>POST</code> <code>/articles</code>&emsp;Adds an Article</summary>
 
 ##### Parameters
 
@@ -194,7 +194,7 @@ management.endpoints.web.exposure.include=*
 <br>
 
 <details>
- <summary><code>GET</code>  <code>/articles</code></summary>
+ <summary><code>GET</code>  <code>/articles</code>&emsp;Gets all articles</summary>
 
 ##### Parameters
 
@@ -214,11 +214,35 @@ management.endpoints.web.exposure.include=*
 <br>
 
 <details>
- <summary><code>PUT</code> <code>/articles/{id}</code></summary>
+ <summary><code>GET</code>  <code>/articles/{id}</code>&emsp;Gets an article with id</summary>
 
-##### Parameters
+##### Path-Parameters
 
-> no Parameters
+> | name | type |
+> | - | - |
+> | id | string |
+
+##### RequestBody
+>None
+
+##### Responses
+
+> http code | response|
+> -|-
+> `200`        | `Successful Operation`
+> `400`        | `{"code":"400","message":"Bad Request"}` 
+> `404`        | `Not found`
+</details>
+<br>
+
+<details>
+ <summary><code>PUT</code> <code>/articles/{id}</code>&emsp;Updates article with id</summary>
+
+##### Path-Parameters
+
+> | name | type |
+> | - | - |
+> | id | string |
 
 ##### RequestBody (required)
 ```yaml
@@ -241,11 +265,13 @@ management.endpoints.web.exposure.include=*
 </details>
 <br>
 <details>
- <summary><code>DELETE</code> <code>/articles/{id}</code></summary>
+ <summary><code>DELETE</code> <code>/articles/{id}</code>&emsp;Deletes an article with id</summary>
 
-##### Parameters
+##### Path-Parameters
 
-> no Parameters
+> | name | type |
+> | - | - |
+> | id | string |
 
 ##### RequestBody
 > None
