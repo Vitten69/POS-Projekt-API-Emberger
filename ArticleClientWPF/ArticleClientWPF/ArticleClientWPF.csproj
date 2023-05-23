@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Pictures\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="check.png" />
+    <None Remove="edit.png" />
+    <None Remove="Pictures\cancel.png" />
+    <None Remove="Pictures\check.png" />
+    <None Remove="Pictures\edit.png" />
+    <None Remove="Pictures\plus-icon.png" />
+    <None Remove="Pictures\refresh.png" />
+    <None Remove="Pictures\trash.png" />
+    <None Remove="Pictures\white-plus-icon.png" />
+    <None Remove="plus-icon.png" />
+    <None Remove="plus.png" />
+    <None Remove="trash.png" />
+    <None Remove="trashcan.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pictures\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Pictures\cancel.png" />
+    <Resource Include="Pictures\edit.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Pictures\check.png" />
+    <Resource Include="Pictures\plus-icon.png" />
+    <Resource Include="Pictures\refresh.png" />
+    <Resource Include="Pictures\trash.png" />
+    <Resource Include="Pictures\white-plus-icon.png" />
+  </ItemGroup>
+
+</Project>

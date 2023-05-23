@@ -1,0 +1,93 @@
+﻿@namespace ArticleClientWebsite
+@page "/articles"
+@page "/"
+
+<h3>Articles</h3>
+
+<!--Shows all Articles-->
+@if(articles != null)
+{
+    @foreach(Article article in articles)
+    {
+        <button class="custom-button" @onclick="() => showFullArticle(article)">
+            <div class="button-content">
+                <div class="button-title">@article.title</div>
+                <div class="button-subtitle">@article.publisher</div>
+            </div>
+        </button>
+    }
+}
+
+<!--Shows Full Article-->
+@if(art != null)
+{
+    <div class='article-container'>
+        <div class='article-title'>@art.title</div>
+        <div class='article-content'>@art.content</div>
+        <div class='article-details'>
+            <div class='article-author'>Autor: @art.publisher</div>
+            <div class='article-date'>Erstellungsdatum: @art.publishDate</div>
+        </div>
+        <br>
+        <div class="article-content">Kategorie @art.category</div>
+    </div>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        getArticlesFromAPI();
+    }
+
+    public List<Article> articles = new List<Article>();
+    private Article art = null;
+
+    [Inject] private NavigationManager _navigationManager { get; set; }
+
+    public void getArticlesFromAPI()
+    {
+        HttpClient client = new HttpClient();
+        string response = "";
+
+        try
+        {
+            response = client.GetStringAsync("http://localhost:3002/articles").Result;
+            articles = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Article>>(response);    
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message + "\nAPI wsl noch nicht an");
+        }
+
+    }
+
+    public void showFullArticle(Article article)
+    {
+        art = article;
+    }
+
+    /*private RenderFragment showAllArticles()
+    {
+        string html = ""; 
+
+        foreach(Article article in articles)
+        {
+            html += $@"
+            <div class='article-container'>
+                <div class='article-title'>{article.title}</div>
+                <div class='article-content'>{article.content}</div>
+                <div class='article-details'>
+                    <div class='article-author'>Autor: {article.publisher}</div>
+                    <div class='article-date'>Erstellungsdatum: {article.publishDate}</div>
+                </div>
+            </div>";
+        }
+
+
+        return (builder) =>
+        {
+            builder.AddMarkupContent(0, html);
+        };
+    }*/
+
+}

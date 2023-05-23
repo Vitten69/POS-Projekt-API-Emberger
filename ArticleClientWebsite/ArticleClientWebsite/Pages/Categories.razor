@@ -1,0 +1,99 @@
+﻿@namespace ArticleClientWebsite
+@page "/categories"
+
+<h3>Categories</h3>
+<br />
+<!--Show all Categories-->
+@if (categoriesHashSet != null)
+{
+    @foreach (string s in categoriesHashSet)
+    {
+        <button class="styled-button" @onclick="() => showAllArticlesWithCategory(s)">@s</button>
+    }
+}
+
+<br />
+<br />
+
+<!--Show all Articles From Category-->
+@if (cat != "")
+{
+    @if (articles != null)
+    {
+        @foreach (Article article in articles)
+        {
+            @if (article.category == cat)
+            {
+                <button class="custom-button" @onclick="() => showFullArticle(article)">
+                    <div class="button-content">
+                        <div class="button-title">@article.title</div>
+                        <div class="button-subtitle">@article.publisher</div>
+                    </div>
+                </button>
+            }
+        }
+    }
+
+    <!--Shows Full Article-->
+    @if (art != null)
+    {
+        <div class='article-container'>
+            <div class='article-title'>@art.title</div>
+            <div class='article-content'>@art.content</div>
+            <div class='article-details'>
+                <div class='article-author'>Autor: @art.publisher</div>
+                <div class='article-date'>Erstellungsdatum: @art.publishDate</div>
+            </div>
+            <br>
+            <div class="article-content">Kategorie @art.category</div>
+        </div>
+    }
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        getArticlesFromAPI();
+    }
+
+    private List<Article> articles = new List<Article>();
+    private HashSet<string> categoriesHashSet = new HashSet<string>();
+    private string cat = "";
+    private Article art = null;
+
+    public void getArticlesFromAPI()
+    {
+        HttpClient client = new HttpClient();
+        string response = "";
+
+        try
+        {
+            response = client.GetStringAsync("http://localhost:3002/articles").Result;
+            articles = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Article>>(response);
+
+            //fügt die Category in ein Hashset ein
+            if (articles != null)
+            {
+                foreach (Article a in articles)
+                {
+                    categoriesHashSet.Add(a.category);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message + "\nAPI wsl noch nicht an");
+        }
+    }
+
+    private void showAllArticlesWithCategory(string publisher)
+    {
+        cat = publisher;
+        art = null;
+    }
+
+    public void showFullArticle(Article article)
+    {
+        art = article;
+    }
+}
